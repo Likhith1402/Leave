@@ -1,38 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave Application Letter</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apology</title>
+  <style>
+    body { font-family: system-ui, Arial; background:#0b1220; color:#e8eefc; margin:0; padding:24px; }
+    .card { max-width:720px; margin:40px auto; background:#111b33; border:1px solid #223056;
+      border-radius:16px; padding:24px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .badge { display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; }
+    .ok { background: rgba(45,212,191,.18); color:#7ff3e6; border:1px solid rgba(45,212,191,.35); }
+    button { cursor:pointer; border:0; padding:12px 16px; border-radius:12px; font-weight:700;
+      background:#2dd4bf; color:#06201c; }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <div class="header">
-            <h1>Leave Application</h1>
-        </div>
-        <div class="content">
-            <p>Date: <span id="date">19/08/2024</span></p>
-            <p>To,</p>
-            <p><strong>Surya</strong></p>
-            
-            <p>Niharika Technologies</p>
-            <p>Hyderabad</p>
+  <div class="card">
+    <h1 id="title"></h1>
+    <div id="content"></div>
+  </div>
 
-            <p>Dear Surya,</p>
+  <script>
+    const PERSON_NAME = "Friend";
+    const YOUR_NAME = "Sai";
+    const MESSAGE = "I’m really sorry for what happened. I understand I hurt you, and I don’t want to repeat that. Thank you for giving me a chance to make things right.";
+    const KEY = "apologyAccepted_v1";
 
-            <p>I am writing to formally request leave from 21/08/2024 to 23/08/2024. The reason for my leave is to attend my sister marriage .</p>
+    document.getElementById("title").textContent = `To ${PERSON_NAME}`;
 
-            <p>I have ensured that my current tasks are completed or delegated appropriately, and I am confident that my absence will not disrupt the workflow. Please let me know if you need any additional information or if there are any specific arrangements you would like me to make before my leave.</p>
+    function render() {
+      const accepted = localStorage.getItem(KEY) === "true";
+      const content = document.getElementById("content");
+      if (accepted) {
+        content.innerHTML = `
+          <p><span class="badge ok">✅ Apology accepted</span></p>
+          <p>Thank you. I’ll prove it with my actions, not just words.</p>
+        `;
+      } else {
+        content.innerHTML = `
+          <p>${MESSAGE}</p>
+          <p>— ${YOUR_NAME}</p>
+          <button id="btn">Accept apology</button>
+        `;
+        document.getElementById("btn").onclick = () => {
+          localStorage.setItem(KEY, "true");
+          render();
+        };
+      }
+    }
 
-            <p>Thank you for considering my request. I look forward to your approval.</p>
-
-            <p>Sincerely,</p>
-            <p><strong>Likhith Reddy</strong></p>
-            
-            <p>Ph.no : 9014811624</p>
-            <p>Mail : likhith1628@gmail.com</p>
-        </div>
-    </div>
+    render();
+  </script>
 </body>
 </html>
