@@ -19,12 +19,15 @@
       align-items: center;
       justify-content: center;
       color: #2f2f2f;
+      padding: 18px;
+      box-sizing: border-box;
     }
 
     .card {
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
-      max-width: 720px;
+      max-width: 760px;
+      width: 100%;
       padding: 30px 26px;
       border-radius: 20px;
       box-shadow: 0 18px 36px rgba(0,0,0,0.15);
@@ -32,21 +35,27 @@
     }
 
     h1 {
-      margin-top: 0;
+      margin: 0 0 8px;
       font-size: 26px;
       color: #444;
     }
 
+    .subtitle {
+      margin: 0 0 18px;
+      font-size: 14px;
+      opacity: 0.75;
+    }
+
     p {
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.75;
       margin: 14px 0;
     }
 
     .signature {
       margin-top: 18px;
       font-weight: 600;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     button {
@@ -77,21 +86,63 @@
       color: #1e4a5f;
       border: 1px solid rgba(173,216,230,0.7);
     }
+
+    .tiny {
+      margin-top: 14px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    a.linkbtn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      background: rgba(0,0,0,0.06);
+      color: #222;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    a.linkbtn:hover {
+      transform: translateY(-1px);
+      background: rgba(0,0,0,0.09);
+    }
   </style>
 </head>
 
 <body>
   <div class="card">
     <h1 id="title"></h1>
+    <div class="subtitle">Bestie note — simple, honest, and from the heart 🤍</div>
     <div id="content"></div>
   </div>
 
   <script>
-    // ✅ Your requested changes (exact)
+    // ✅ Your requested constants (kept exactly)
     const PERSON_NAME = "My Dear Bestie (Buntey❤️)";
     const YOUR_NAME = "Sai likhith";
-    const MESSAGE = "I’m really sorry for what happened. I understand I hurt you😢, and I don’t want to repeat that. Please give me a chance to make things right🙏🤌.";
+    const MESSAGE = `
+I’m really sorry for what happened.
+Not in a “big speech” way—just in a real, bestie way 😢
+
+I know I hurt you, and I hate that.
+You’re one of my safe places—someone I genuinely care about.
+A little bit of love lives in our friendship,
+the kind that’s loyal, warm, and always cheering for you… not the romantic kind, just real. 🤍
+
+If my words or actions made a crack in our comfort,
+I want to fix it with patience, respect, and better choices.
+No pressure. No drama.
+Just me saying: you matter to me… a lot.
+
+Please give me a chance to make things right 🙏🤌
+    `.trim();
     const KEY = "apologyAccepted_v1";
+
+    // Optional: easy “tell me you saw it” button (no tracking, just helps her message you)
+    const SHOW_NOTIFY_BUTTON = true;
+    const NOTIFY_TEXT = "Hey Sai, I saw your page. It’s okay — apology accepted 🤍";
 
     document.getElementById("title").textContent = `Hey ${PERSON_NAME} 🌼`;
 
@@ -103,16 +154,28 @@
         content.innerHTML = `
           <p><span class="badge">🤍 Apology accepted</span></p>
           <p>
-            Thank you for understanding.
-            I truly appreciate our friendship and the chance
-            to move forward with clarity and respect.
+            Thank you, bestie.
+            I’m grateful for our friendship and the comfort we share.
+            I’ll protect this bond with more care, always.
           </p>
+          ${SHOW_NOTIFY_BUTTON ? `
+            <a class="linkbtn"
+               href="mailto:?subject=Apology%20Accepted&body=${encodeURIComponent(NOTIFY_TEXT)}">
+               Send a quick “accepted” note ✉️
+            </a>
+          ` : ``}
+          <div class="tiny">
+            (This acceptance is saved on this device/browser.)
+          </div>
         `;
       } else {
         content.innerHTML = `
-          <p>${MESSAGE}</p>
+          <p>${MESSAGE.replace(/\n/g, "<br>")}</p>
           <p class="signature">— ${YOUR_NAME}</p>
           <button id="acceptBtn">Accept apology</button>
+          <div class="tiny">
+            Tip: If you open this again after accepting, it will still show “Apology accepted”.
+          </div>
         `;
 
         document.getElementById("acceptBtn").onclick = () => {
